@@ -1,9 +1,9 @@
 <?php
-
-CONST DB_HOST = 'localhost';
-CONST DB_USERNAME = 'root';
-CONST DB_PASSWORD = 'root';
-CONST DB_NAME = 'manager';
-
+/*
+CONST DB_HOST = 'nee';
+CONST DB_USERNAME = 'nee';
+CONST DB_PASSWORD = 'nee';
+CONST DB_NAME = 'nee';
+*/
 
  ?>
