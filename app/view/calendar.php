@@ -13,8 +13,8 @@
 
   <?php
   if(isset($_GET['month'])){
-    include '..\config\config.php';
-    include '..\config\database.php';
+    include '../config/config.php';
+    include '../config/database.php';
   }
   if (!function_exists('cal_days_in_month'))
   {
@@ -24,7 +24,7 @@
     }
   }
   if (!defined('CAL_GREGORIAN'))
-      define('CAL_GREGORIAN', 1); 
+      define('CAL_GREGORIAN', 1);
   $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
   $userid = explode(",",$_COOKIE['user'])[1];
   $year = '';
