@@ -1,3 +1,4 @@
+  <script src="app/js/monthCarousel.js"></script>
 </head>
 <body>
     <div id="loading"><img src='app/img/progress-bar.gif'/></div>
@@ -20,6 +21,31 @@
                 <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
               </div>
             </div>
+          </div>
+          <div class="col-md-6">
+          <div id="carousel">
+            <p>januari</p>
+            <p>februari</p>
+            <p>maart</p>
+            <p>april</p>
+            <p>mei</p>
+            <p>juni</p>
+            <p>juli</p>
+            <p>augustus</p>
+
+          </div>
+        </div>
+          <div class="col-md-4">
+            <div class="col-md-12"></div>
+            <div class="col-md-12"></div>
+          </div>
+          <div class="col-md-4">
+            <div class="col-md-12"></div>
+            <div class="col-md-12"></div>
+          </div>
+          <div class="col-md-4">
+            <div class="col-md-12"></div>
+            <div class="col-md-12"></div>
           </div>
         </div>
       </div>
