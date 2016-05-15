@@ -1,25 +1,43 @@
 window.onload = function(){
+  //var months = ['januari','februear','march','april','may','june','july','august','september','oktober','november','december'];
   var carousel = document.getElementById('carousel');
-  var children = carousel.children;
   var positionInfo = carousel.getBoundingClientRect();
   var carouselWidth = positionInfo.width;
-  var blockWidth = children[1].getBoundingClientRect().width;
-  var LeftCenter = carouselWidth/2-blockWidth;
-  var rightCenter = carouselWidth/2;
+  var center = carousel.clientWidth/2;
+  var children = carousel.children;
   var oldxValue = 0;
-  console.log(children[5].offsetLeft,children[5],carouselWidth);
 
-    function scrollHorizontally(e) {
-        e = window.event || e;
-        var positionInfo = carousel.getBoundingClientRect();
-        var mouseX = e.pageX - positionInfo.left;
-        if(e.pageX < oldxValue){
-          carousel.scrollLeft += 3;
-        }else{
-          carousel.scrollLeft -= 3;
+  function scrollHorizontally(e) {
+      e = window.event || e;
+      var positionInfo = carousel.getBoundingClientRect();
+      var mouseX = e.pageX - positionInfo.left;
+      if(e.pageX < oldxValue){
+        carousel.scrollLeft += 3;
+      }else{
+        carousel.scrollLeft -= 3;
+      }
+      oldxValue =  e.pageX;
+      e.preventDefault();
+  }
+
+    function setcenter(e){
+      var positions = [];
+      for (var i = 0; i < children.length; i++) {
+        var left = children[i].getBoundingClientRect().left - positionInfo.left;
+        var offsetCenter = center-left;
+        positions.push(offsetCenter);
+      }
+
+      var startvalue = positions[0];
+      var index = 0;
+
+      for (var i = 0; i < positions.length; i++) {
+        var tempvar = (positions[i] < 0) ? positions[i] * -1 : positions[i]
+        if(tempvar < startvalue){
+          startvalue = positions[i];
+          index = i;
         }
-        oldxValue =  e.pageX;
-        e.preventDefault();
+      }
     }
 
 
@@ -31,5 +49,6 @@ window.onload = function(){
       };
       function mouseup() {
         carousel.removeEventListener('mousemove', scrollHorizontally,false);
+        carousel.addEventListener('mouseup',setcenter,false);
       };
 }
