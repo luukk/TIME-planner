@@ -21,6 +21,9 @@ window.onload = function(){
   }
 
   function setcenter(e){
+    carousel.removeEventListener('mousemove', scrollHorizontally,false);
+    e = window.event || e;
+    console.log('well met');
     var positions = [];
     for (var i = 0; i < children.length; i++) {
       var left = children[i].getBoundingClientRect().left - positionInfo.left;
@@ -37,22 +40,13 @@ window.onload = function(){
         index = i;
       }
     }
-    if(positions[index] < 0 ){
       carousel.scrollLeft -= positions[index];
-    }else{
-      carousel.scrollLeft -= positions[index];
-    }
   }
 
+  function mousedown() {
+     carousel.addEventListener('mousemove', scrollHorizontally,false);
+  };
 
-       carousel.addEventListener("mousedown",mousedown,false);
-       carousel.addEventListener("mouseup",mouseup,false);
-
-      function mousedown() {
-         carousel.addEventListener('mousemove', scrollHorizontally,false);
-      };
-      function mouseup() {
-        carousel.removeEventListener('mousemove', scrollHorizontally,false);
-        carousel.addEventListener('mouseup',setcenter,false);
-      };
+  carousel.addEventListener("mousedown",mousedown,false);
+  carousel.addEventListener("mouseup",setcenter,false);
 }
