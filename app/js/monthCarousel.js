@@ -20,25 +20,29 @@ window.onload = function(){
       e.preventDefault();
   }
 
-    function setcenter(e){
-      var positions = [];
-      for (var i = 0; i < children.length; i++) {
-        var left = children[i].getBoundingClientRect().left - positionInfo.left;
-        var offsetCenter = center-left;
-        positions.push(offsetCenter);
-      }
+  function setcenter(e){
+    var positions = [];
+    for (var i = 0; i < children.length; i++) {
+      var left = children[i].getBoundingClientRect().left - positionInfo.left;
+      var offsetCenter = center-left-65;
+      positions.push(offsetCenter);
+    }
+    var startvalue = positions[0];
+    var index = 0;
 
-      var startvalue = positions[0];
-      var index = 0;
-
-      for (var i = 0; i < positions.length; i++) {
-        var tempvar = (positions[i] < 0) ? positions[i] * -1 : positions[i]
-        if(tempvar < startvalue){
-          startvalue = positions[i];
-          index = i;
-        }
+    for (var i = 0; i < positions.length; i++) {
+      var tempvar = (positions[i] < 0) ? positions[i] * -1 : positions[i]
+      if(tempvar < startvalue){
+        startvalue = positions[i];
+        index = i;
       }
     }
+    if(positions[index] < 0 ){
+      carousel.scrollLeft -= positions[index];
+    }else{
+      carousel.scrollLeft -= positions[index];
+    }
+  }
 
 
        carousel.addEventListener("mousedown",mousedown,false);
