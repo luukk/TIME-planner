@@ -61,7 +61,7 @@ window.onload = function(){
         scrollDirection = test === 0 ? 270 : -270;
     if(test != null){
       for (var i = 0; i < 2; i++) {
-        carousel.lastElementChild.style.marginRight = '4px';
+        children[load].style.marginRight = '4px';
         carousel.insertBefore(children[load],children[test]);
       }
       carousel.scrollLeft += scrollDirection;
