@@ -40,27 +40,39 @@ window.onload = function(){
       }
     }
     animate(positions[index]);
-
-    function animate(offset){
-      var temp = 0 ;
-      setInterval(function(){
-        if(temp < offset){
-          carousel.scrollLeft -= 1;
-          temp +=1;
-        }else if (temp > offset){
-          carousel.scrollLeft -= -1;
-          temp -= 1;
-        }
-      })
-    }
   }
 
+  function animate(offset){
+    var temp = 0 ;
+    var test = 1;
+    setInterval(function(){
+      if(temp < offset){
+        carousel.scrollLeft -= 1;
+        temp +=1;
+      }else if (temp > offset){
+        carousel.scrollLeft -= -1;
+        temp -= 1;
+      }
+    })
+  }
+  function infinCarousel(){
+    var test = carousel.scrollLeft > 1280-450 ? children.length : ((carousel.scrollLeft < 450)) ? 0 : null;
+        load = test === 0 ? 11 : 0,
+        scrollDirection = test === 0 ? 270 : -270;
+    if(test != null){
+      for (var i = 0; i < 2; i++) {
+        carousel.lastElementChild.style.marginRight = '4px';
+        carousel.insertBefore(children[load],children[test]);
+      }
+      carousel.scrollLeft += scrollDirection;
+    }
+  }
   function mousedown() {
      carousel.addEventListener('mousemove', scrollHorizontally,false);
   };
 
   carousel.addEventListener("mousedown",mousedown,false);
   carousel.addEventListener("mouseup",setcenter,false);
-
-
+  carousel.addEventListener("mouseup",infinCarousel,false);
+  infinCarousel();
 }
