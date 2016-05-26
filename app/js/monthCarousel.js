@@ -4,10 +4,20 @@ window.onload = function(){
       carouselWidth = positionInfo.width,
       center = carousel.clientWidth/2,
       children = carousel.children,
+      childInfo = children[0].getBoundingClientRect(),
       oldxValue = 0;
+      var positions = [];
 
+
+  function setChildWidth(){
+    for (var i = 0; i < children.length; i++) {
+      children[i].style.width = parseInt((carouselWidth/3 ) -4) + "px";
+    }
+  }
+  setChildWidth();
   function scrollHorizontally(e) {
       e = window.event || e;
+      positions = [];
       var positionInfo = carousel.getBoundingClientRect();
       var mouseX = e.pageX - positionInfo.left;
       if(e.pageX < oldxValue){
@@ -22,25 +32,22 @@ window.onload = function(){
   function setcenter(e){
     carousel.removeEventListener('mousemove', scrollHorizontally,false);
     e = window.event || e;
-    var positions = [];
     for (var i = 0; i < children.length; i++) {
-      var left = children[i].getBoundingClientRect().left - positionInfo.left;
-      var offsetCenter = left;
-      positions.push(offsetCenter);
+      var month = carousel.children[i].innerHTML;
+      var left = children[i].getBoundingClientRect().left - positionInfo.left -childInfo.width -4;
+      positions.push({month:month, offset: left});
     }
-    var startvalue = positions[0] < 0 ? positions[0] *-1 : positions[0];
+    var startvalue = positions[0].offset < 0 ? positions[0].offset *-1 : positions[0].offset;
     var index = 0;
-
     for (var i = 0; i < positions.length; i++) {
-      var tempvar = (positions[i] < 0) ? positions[i] * -1 : positions[i];
+      var tempvar = (positions[i].offset < 0) ? positions[i].offset * -1 : positions[i].offset;
       if(tempvar < startvalue){
         startvalue = tempvar;
         index = i;
       }
     }
-    animate(positions[index]);
+    animate(positions[index].offset);
   }
-
   function animate(offset){
     var temp = 0 ;
     var test = 1;
@@ -54,10 +61,22 @@ window.onload = function(){
       }
     })
   }
+  function setStartPosition(){
+    setcenter();
+    var date = new Date().toUTCString().split(' ')[2];
+    var width = children[0].getBoundingClientRect().width;
+    for (var i = 0; i < positions.length; i++) {
+      if(positions[i].month === date){
+        carousel.scrollLeft = positions[i].offset -width;
+      }
+    }
+  }
+  setStartPosition();
   function infinCarousel(){
     var test = carousel.scrollLeft > 1280-450 ? children.length : ((carousel.scrollLeft < 450)) ? 0 : null;
         load = test === 0 ? 11 : 0,
-        scrollDirection = test === 0 ? 270 : -270
+        childWidth = children[0].getBoundingClientRect().width;
+        scrollDirection = test === 0 ? childWidth *2 +8 : - childWidth *2 + 8;
     if(test != null){
       for (var i = 0; i < 2; i++) {
         children[load].style.marginRight = '4px';
