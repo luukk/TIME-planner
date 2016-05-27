@@ -5,8 +5,9 @@ window.onload = function(){
       center = carousel.clientWidth/2,
       children = carousel.children,
       childInfo = children[0].getBoundingClientRect(),
-      oldxValue = 0;
-      var positions = [];
+      oldxValue = 0,
+      positions = [],
+      selectedMonth = new Date().toUTCString().split(' ')[2];
 
 
   function setChildWidth(){
@@ -17,7 +18,6 @@ window.onload = function(){
   setChildWidth();
   function scrollHorizontally(e) {
       e = window.event || e;
-      positions = [];
       var positionInfo = carousel.getBoundingClientRect();
       var mouseX = e.pageX - positionInfo.left;
       if(e.pageX < oldxValue){
@@ -29,9 +29,10 @@ window.onload = function(){
       e.preventDefault();
   }
 
-  function setcenter(e){
+  function setcenter(){
     carousel.removeEventListener('mousemove', scrollHorizontally,false);
     e = window.event || e;
+    positions = [];
     for (var i = 0; i < children.length; i++) {
       var month = carousel.children[i].innerHTML;
       var left = children[i].getBoundingClientRect().left - positionInfo.left -childInfo.width -4;
@@ -44,8 +45,10 @@ window.onload = function(){
       if(tempvar < startvalue){
         startvalue = tempvar;
         index = i;
-      }
+
     }
+  }
+    selectedMonth = positions[index+1];
     animate(positions[index].offset);
   }
   function animate(offset){
@@ -62,21 +65,34 @@ window.onload = function(){
     })
   }
   function setStartPosition(){
-    setcenter();
+    setcenter(selectedMonth);
     var date = new Date().toUTCString().split(' ')[2];
     var width = children[0].getBoundingClientRect().width;
     for (var i = 0; i < positions.length; i++) {
       if(positions[i].month === date){
         carousel.scrollLeft = positions[i].offset -width;
+        selectedMonth = positions[i]
       }
     }
+    console.log(selectedMonth);
+
   }
   setStartPosition();
+  function getData(){
+    console.log(selectedMonth);
+    httpRequest = new HttpRequest();
+
+    httpRequest.load("app/models/carouselOutput.php?date="+selectedMonth, function(data) {
+      document.querySelector(".cdata").innerHTML = data;
+    });
+
+  }
+  getData();
   function infinCarousel(){
     var test = carousel.scrollLeft > 1280-450 ? children.length : ((carousel.scrollLeft < 450)) ? 0 : null;
         load = test === 0 ? 11 : 0,
         childWidth = children[0].getBoundingClientRect().width;
-        scrollDirection = test === 0 ? childWidth *2 +8 : - childWidth *2 + 8;
+        scrollDirection = test === 0 ? childWidth *2 +8 : - (childWidth *2 +8);
     if(test != null){
       for (var i = 0; i < 2; i++) {
         children[load].style.marginRight = '4px';
@@ -92,5 +108,6 @@ window.onload = function(){
   carousel.addEventListener("mousedown",mousedown,false);
   carousel.addEventListener("mouseup",setcenter,false);
   carousel.addEventListener("mouseup",infinCarousel,false);
+  carousel.addEventListener("mouseup",getData,false);
   infinCarousel();
 }
