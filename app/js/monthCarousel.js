@@ -66,24 +66,25 @@ window.onload = function(){
   }
   function setStartPosition(){
     setcenter(selectedMonth);
-    var date = new Date().toUTCString().split(' ')[2];
-    var width = children[0].getBoundingClientRect().width;
+    var monthNames = ["January", "February", "March","April", "May", "June", "July","August", "September", "October","November", "December"],
+        currentMonth = new Date().getMonth(),
+        width = children[0].getBoundingClientRect().width;
     for (var i = 0; i < positions.length; i++) {
-      if(positions[i].month === date){
+      if(positions[i].month === monthNames[currentMonth]){
         carousel.scrollLeft = positions[i].offset -width;
         selectedMonth = positions[i]
       }
     }
-    console.log(selectedMonth);
-
   }
   setStartPosition();
   function getData(){
-    console.log(selectedMonth);
+    var checkMonth = selectedMonth.month;
     httpRequest = new HttpRequest();
 
-    httpRequest.load("app/models/carouselOutput.php?date="+selectedMonth, function(data) {
-      document.querySelector(".cdata").innerHTML = data;
+    httpRequest.load("app/models/carouselOutput.php?date="+checkMonth, function(data) {
+      data = JSON.parse(data);
+      document.querySelector('.earnings').innerHTML = data.earned;
+      document.querySelector('.hours').innerHTML = data.hours_worked;
     });
 
   }

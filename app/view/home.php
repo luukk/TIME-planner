@@ -11,28 +11,29 @@
         <div class="row">
           <div class="col-md-9" id="dashboard">Dashboard</div>
           <div class="col-md-3">
-            <div class="row">
-              <div class="col-md-6">
-                total moneyz
-                <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
-              </div>
-              <div class="col-md-6">
-                this month moneyz
-                <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
-              </div>
-            </div>
+          </div>
+          <div class="col-md-4 col-sm-4">
+          <div id="carousel">
+              <span>January</span>
+              <span>February</span>
+              <span>March</span>
+              <span>April</span>
+              <span>May</span>
+              <span>June</span>
+              <span>July</span>
+              <span>August</span>
+              <span>September</span>
+              <span>Oktober</span>
+              <span>November</span>
+              <span>December</span>
           </div>
           <div class="col-md-6">
-          <div id="carousel">
-            <p>januari</p>
-            <p>februari</p>
-            <p>maart</p>
-            <p>april</p>
-            <p>mei</p>
-            <p>juni</p>
-            <p>juli</p>
-            <p>augustus</p>
-
+            <h3>Verdient</h3>
+            <div class="earnings"></div>
+          </div>
+          <div class="col-md-6">
+            <h3>uren gewerkt</h3>
+            <div class="hours"></div>
           </div>
         </div>
           <div class="col-md-4">
