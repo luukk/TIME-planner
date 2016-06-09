@@ -51,34 +51,23 @@ window.onload = function(){
     animate(positions,index);
 
 }
-  function animate(object,month){
-    test = 1;
-    var offset = object[month].offset;
-    var scrollCount = 0;
+function animate(object,month){
+  var offset = object[month].offset,
+    scrollCount = 0,
     scrollInterval = setInterval(function(){
       if(scrollCount != offset){
         scrollCount = offset < scrollCount ? scrollCount -= 1 : scrollCount +=1;
-        if(offset < scrollCount){
-          carousel.removeEventListener('mousedown', mousedown,false);
-          carousel.removeEventListener("mouseup",setcenter,false);
-          carousel.scrollLeft -= 1;
-        }else{
-          carousel.removeEventListener('mousedown', mousedown,false);
-          carousel.removeEventListener("mouseup",setcenter,false);
-          carousel.scrollLeft += 1;
-        }
+        direction = offset < scrollCount ? carousel.scrollLeft -=1 : carousel.scrollLeft+1;
+        carousel.scrollLeft = direction;
+        blockCarousel();
       }
       if(scrollCount === offset){
         clearInterval(scrollInterval);
         selectedMonth = object[month+1];
-        console.log(selectedMonth);
         getData();
-          carousel.addEventListener('mousedown', mousedown,false);
-          carousel.addEventListener("mouseup",setcenter,false);
+        restore();
         }
     });
-
-
   }
   function setStartPosition(){
     setcenter();
@@ -117,17 +106,24 @@ window.onload = function(){
       carousel.scrollLeft += scrollDirection;
     }
   }
-  function mousedown() {
-     carousel.addEventListener('mousemove', scrollHorizontally,false);
-  };
-  function mouseup(){
 
-  }
-
-  carousel.addEventListener("mousedown",mousedown,false);
+function mousedown() {
+  carousel.addEventListener('mousemove', scrollHorizontally,false);
+};
+function mouseup(){
   carousel.addEventListener("mouseup",setcenter,false);
   carousel.addEventListener("mouseup",infinCarousel,false);
-//  carousel.addEventListener("mouseup",getData,false);
-  carousel.addEventListener("mouseup",mouseup,false);
+}
+function restore(){
+  carousel.addEventListener('mousedown', mousedown,false);
+  carousel.addEventListener("mouseup",setcenter,false);
+}
+function blockCarousel(){
+  carousel.removeEventListener('mousedown', mousedown,false);
+  carousel.removeEventListener("mouseup",setcenter,false);
+}
+carousel.addEventListener("mousedown",mousedown,false);
+
+carousel.addEventListener("mouseup",mouseup,false);
   infinCarousel();
 }
