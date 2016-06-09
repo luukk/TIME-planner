@@ -12,7 +12,7 @@
           <div class="col-md-9" id="dashboard">Dashboard</div>
           <div class="col-md-3">
           </div>
-          <div class="col-md-4 col-sm-4">
+          <div class="col-md-6 col-sm-4">
           <div id="carousel">
               <span>January</span>
               <span>February</span>
@@ -27,11 +27,11 @@
               <span>November</span>
               <span>December</span>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 monthdata">
             <h3>Verdient</h3>
             <div class="earnings"></div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 monthdata">
             <h3>uren gewerkt</h3>
             <div class="hours"></div>
           </div>
