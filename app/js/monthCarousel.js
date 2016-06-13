@@ -6,9 +6,7 @@ window.onload = function(){
       children = carousel.children,
       childInfo = children[0].getBoundingClientRect(),
       oldxValue = 0,
-      positions = [],
-      selectedMonth = new Date().toUTCString().split(' ')[2];
-
+      positions = [];
 
   function setChildWidth(){
     for (var i = 0; i < children.length; i++) {
@@ -28,8 +26,7 @@ window.onload = function(){
       oldxValue =  e.pageX;
       e.preventDefault();
   }
-
-  function setcenter(){
+  function setcenter(startDate){
     carousel.removeEventListener('mousemove', scrollHorizontally,false);
     e = window.event || e;
     positions = [];
@@ -48,10 +45,9 @@ window.onload = function(){
 
     }
   }
-    animate(positions,index);
-
+  start = typeof startDate === 'number' ? animate(positions,index,startDate) : animate(positions,index,Infinity);
 }
-function animate(object,month){
+function animate(object,month,startPosition){
   var offset = object[month].offset,
     scrollCount = 0,
     scrollInterval = setInterval(function(){
@@ -63,36 +59,39 @@ function animate(object,month){
       }
       if(scrollCount === offset){
         clearInterval(scrollInterval);
-        selectedMonth = object[month+1];
-        getData();
+        if(startPosition == Infinity){
+            getData(object[month+1]);
+        }else{
+          getData(object[startPosition]);
+        }
         restore();
         }
     });
   }
   function setStartPosition(){
-    setcenter();
+    setcenter(new Date().getMonth());
     var monthNames = ["January", "February", "March","April", "May", "June", "July","August", "September", "October","November", "December"],
         currentMonth = new Date().getMonth(),
         width = children[0].getBoundingClientRect().width;
     for (var i = 0; i < positions.length; i++) {
       if(positions[i].month === monthNames[currentMonth]){
         carousel.scrollLeft = positions[i].offset -width ;
-        selectedMonth = positions[i]
       }
     }
   }
   setStartPosition();
 
-  function getData(){
-    var checkMonth = selectedMonth.month;
+  function getData(month){
+    selectedMonth = new Date().toUTCString().split(' ')[2];
+    var checkMonth = month.month;
     httpRequest = new HttpRequest();
     httpRequest.load("app/models/carouselOutput.php?date="+checkMonth, function(data) {
       data = JSON.parse(data);
       document.querySelector('.earnings').innerHTML = "&euro;"+data.earned;
       document.querySelector('.hours').innerHTML = data.hours_worked;
     });
+
   }
-  getData();
   function infinCarousel(){
     var test = carousel.scrollLeft > 1280-450 ? children.length : ((carousel.scrollLeft < 450)) ? 0 : null;
         load = test === 0 ? 11 : 0,
@@ -123,6 +122,8 @@ function blockCarousel(){
   carousel.removeEventListener("mouseup",setcenter,false);
 }
 carousel.addEventListener("mousedown",mousedown,false);
+carousel.addEventListener("touchstart", handleStart, false);
+
 
 carousel.addEventListener("mouseup",mouseup,false);
   infinCarousel();
