@@ -6,7 +6,11 @@ window.onload = function(){
       children = carousel.children,
       childInfo = children[0].getBoundingClientRect(),
       oldxValue = 0,
-      positions = [];
+      positions = [],
+      isTouchSupported = 'ontouchstart' in window,
+      startEvent = isTouchSupported ? 'touchstart' : 'mousedown',
+      moveEvent = isTouchSupported ? 'touchmove' : 'mousemove',
+      endEvent = isTouchSupported ? 'touchend' : 'mouseup';
 
   function setChildWidth(){
     for (var i = 0; i < children.length; i++) {
@@ -15,19 +19,20 @@ window.onload = function(){
   }
   setChildWidth();
   function scrollHorizontally(e) {
-      e = window.event || e;
-      var positionInfo = carousel.getBoundingClientRect();
-      var mouseX = e.pageX - positionInfo.left;
-      if(e.pageX < oldxValue){
+      e = window.event || e,
+      touchobj = e.pageX == undefined ? e.changedTouches[0].pageX : e.pageX,
+      positionInfo = carousel.getBoundingClientRect(),
+      mouseX = touchobj - positionInfo.left;
+      if(touchobj < oldxValue){
         carousel.scrollLeft += 3;
       }else{
         carousel.scrollLeft -= 3;
       }
-      oldxValue =  e.pageX;
+      oldxValue =  touchobj;
       e.preventDefault();
   }
   function setcenter(startDate){
-    carousel.removeEventListener('mousemove', scrollHorizontally,false);
+    carousel.removeEventListener(moveEvent, scrollHorizontally,false);
     e = window.event || e;
     positions = [];
     for (var i = 0; i < children.length; i++) {
@@ -90,7 +95,6 @@ function animate(object,month,startPosition){
       document.querySelector('.earnings').innerHTML = "&euro;"+data.earned;
       document.querySelector('.hours').innerHTML = data.hours_worked;
     });
-
   }
   function infinCarousel(){
     var test = carousel.scrollLeft > 1280-450 ? children.length : ((carousel.scrollLeft < 450)) ? 0 : null;
@@ -107,24 +111,22 @@ function animate(object,month,startPosition){
   }
 
 function mousedown() {
-  carousel.addEventListener('mousemove', scrollHorizontally,false);
+  carousel.addEventListener(moveEvent, scrollHorizontally,false);
 };
 function mouseup(){
-  carousel.addEventListener("mouseup",setcenter,false);
-  carousel.addEventListener("mouseup",infinCarousel,false);
+  carousel.addEventListener(endEvent,setcenter,false);
+  carousel.addEventListener(endEvent,infinCarousel,false);
 }
 function restore(){
-  carousel.addEventListener('mousedown', mousedown,false);
-  carousel.addEventListener("mouseup",setcenter,false);
+  carousel.addEventListener(startEvent, mousedown,false);
+  carousel.addEventListener(endEvent,setcenter,false);
 }
 function blockCarousel(){
-  carousel.removeEventListener('mousedown', mousedown,false);
-  carousel.removeEventListener("mouseup",setcenter,false);
+  carousel.removeEventListener(startEvent, mousedown,false);
+  carousel.removeEventListener(endEvent,setcenter,false);
 }
-carousel.addEventListener("mousedown",mousedown,false);
-carousel.addEventListener("touchstart", handleStart, false);
+carousel.addEventListener(startEvent,mousedown,false);
+carousel.addEventListener(endEvent,mouseup,false);
+infinCarousel();
 
-
-carousel.addEventListener("mouseup",mouseup,false);
-  infinCarousel();
 }
