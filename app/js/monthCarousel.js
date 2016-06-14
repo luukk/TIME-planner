@@ -74,10 +74,10 @@ function animate(object,month,startPosition){
     });
   }
   function setStartPosition(){
-    setcenter(new Date().getMonth());
     var monthNames = ["January", "February", "March","April", "May", "June", "July","August", "September", "October","November", "December"],
         currentMonth = new Date().getMonth(),
         width = children[0].getBoundingClientRect().width;
+        setcenter(currentMonth);
     for (var i = 0; i < positions.length; i++) {
       if(positions[i].month === monthNames[currentMonth]){
         carousel.scrollLeft = positions[i].offset -width ;
@@ -87,8 +87,8 @@ function animate(object,month,startPosition){
   setStartPosition();
 
   function getData(month){
-    selectedMonth = new Date().toUTCString().split(' ')[2];
-    var checkMonth = month.month;
+    selectedMonth = new Date().toUTCString().split(' ')[2],
+    checkMonth = month.month;
     httpRequest = new HttpRequest();
     httpRequest.load("app/models/carouselOutput.php?date="+checkMonth, function(data) {
       data = JSON.parse(data);
