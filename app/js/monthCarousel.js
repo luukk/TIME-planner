@@ -19,10 +19,13 @@ window.onload = function(){
   }
   setChildWidth();
   function scrollHorizontally(e) {
-      e = window.event || e,
       touchobj = e.pageX == undefined ? e.changedTouches[0].pageX : e.pageX,
       positionInfo = carousel.getBoundingClientRect(),
+      console.log(positionInfo);
       mouseX = touchobj - positionInfo.left;
+      if(e.pageX > positionInfo.right || e.pageX < positionInfo.left || e.pageY > positionInfo.bottom || e.pageY < positionInfo.top){
+        setcenter();
+      }
       if(touchobj < oldxValue){
         carousel.scrollLeft += 3;
       }else{
@@ -32,7 +35,7 @@ window.onload = function(){
       e.preventDefault();
   }
   function setcenter(startDate){
-    carousel.removeEventListener(moveEvent, scrollHorizontally,false);
+    window.removeEventListener(moveEvent, scrollHorizontally,false);
     e = window.event || e;
     positions = [];
     for (var i = 0; i < children.length; i++) {
@@ -111,7 +114,7 @@ function animate(object,month,startPosition){
   }
 
 function mousedown() {
-  carousel.addEventListener(moveEvent, scrollHorizontally,false);
+  window.addEventListener(moveEvent, scrollHorizontally,false);
 };
 function mouseup(){
   carousel.addEventListener(endEvent,setcenter,false);
