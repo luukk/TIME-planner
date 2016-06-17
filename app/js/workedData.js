@@ -21,7 +21,7 @@ $(document).ready(function(){
       $("#hourVensterDate").html(date);
       dom = $(this).find('.popup_event');
       $('#setHoursVenster').css('display', 'block');
-      $("#submitworkedhours").click(function(event) {
+      $("#submitworkedhours, #monthSelector").click(function(event) {
         $('#setHoursVenster').css('display', 'none');
       });
       $("#closeVenster").click(function(event) {

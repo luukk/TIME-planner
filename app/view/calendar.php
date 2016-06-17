@@ -70,7 +70,7 @@
   <?php } } ?>
 <div id="selectCalander">
 <form method="post" action="index.php?action=manager" id="selectCalanderForm">
-  <select name="month" onchange="getCalendar(this.value)">
+  <select name="month" onchange="getCalendar(this.value)" id="monthSelector">
     <?php
     for($m = 1;$m <= 12; $m++){
         $datemonth =  date("F", mktime(0, 0, 0, $m));
