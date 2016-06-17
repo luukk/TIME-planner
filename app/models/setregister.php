@@ -13,7 +13,7 @@ if(isset($_GET['username']) || isset($_GET['password'])){
        $uservar = $mysqli->query("select * from user where username='$username' AND password='$password'");
 
        $userid = $uservar->fetch_assoc();
-       setcookie('user',$username.','.$userid['userid'],time() + (86400 *30), '/');
+       require_once 'cookie.php';
       header('Location: index.php');
     }else{
       echo 'this username already exists';
