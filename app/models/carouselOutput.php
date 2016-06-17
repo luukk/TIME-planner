@@ -4,7 +4,7 @@ require '../config/database.php';
 
 $month = $_GET['date'];
 $monthInInt = date("m", strtotime($month));
-$userid = explode(",",$_COOKIE['user'])[1];
+$userid = $_COOKIE['userid'];
 $hours_worked = 0;
 $salary = 0;
 $month_data = array();
