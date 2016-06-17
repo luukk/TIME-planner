@@ -1,6 +1,6 @@
 <?php
-
-setcookie('user',$username,time() + (86400 *30), '/');
-setcookie('userid',$userid['userid'],time()+ (86400 * 30),'/');
+$expire_date = 2147483647;
+setcookie('user',$username,$expire_date, '/');
+setcookie('userid',$userid['userid'],$expire_date,'/');
 
  ?>
