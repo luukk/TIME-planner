@@ -42,23 +42,44 @@ display: block;
   white-space: nowrap;
 }
 #carousel span {
-  width:130px;
+  width: 0px;
   height:180px;
   background-color: red;
-  margin:10px 0px 10px 0px;
   display:inline-block;
   font-size: 1.3em;
   text-align: center;
-  margin-top: 10px;
   line-height: 2;
 }
 .center{
   width: 5px;
-  margin-left: 200px;
+  margin-left: 141.5px;
   height: 5px;
   background-color: black;
 }
-
+.monthdata{
+  text-align: center;
+}
+.monthdata .hours,.earnings{
+  font-size: 20px;
+}
+.characteristic ul{
+  padding: 0;
+}
+.characteristic,.mantissa,.exple{
+  font-size: 1.5em;
+  float: left;
+  text-align: right;
+}
+.characteristic, .mantissa ul,li{
+  list-style-type: none;
+}
+.characteristic li:last-child,.mantissa li:last-child {
+  border-top: 1px solid black;
+}
+.exple{
+  padding-left: 20px;
+  text-align: left !important;
+}
 /*setup */
 #setupBackground{
   height: 100vh;
