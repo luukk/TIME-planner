@@ -21,7 +21,6 @@ window.onload = function(){
   function scrollHorizontally(e) {
       touchobj = e.pageX == undefined ? e.changedTouches[0].pageX : e.pageX,
       positionInfo = carousel.getBoundingClientRect(),
-      console.log(positionInfo);
       mouseX = touchobj - positionInfo.left;
       if(e.pageX > positionInfo.right || e.pageX < positionInfo.left || e.pageY > positionInfo.bottom || e.pageY < positionInfo.top){
         setcenter();

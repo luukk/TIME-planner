@@ -2,7 +2,8 @@
 require '../config/config.php';
 require '../config/database.php';
   $date = $_GET['date'];
-  $hours = $_GET['worked'];
+  $hours = str_replace(',','.',$_GET['worked']);
+
   $userid = $_COOKIE['userid'];
   $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
   $ifexist = $mysqli->query("SELECT * FROM events WHERE userid = $userid AND date = '$date'");
