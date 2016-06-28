@@ -43,6 +43,7 @@ display: block;
 }
 #carousel span {
   width: 0px;
+  margin-right: 4px;
   height:180px;
   background-color: red;
   display:inline-block;
@@ -59,7 +60,7 @@ display: block;
 .monthdata{
   text-align: center;
 }
-.monthdata .hours,.earnings{
+.monthdata, .hours,.earnings{
   font-size: 20px;
 }
 .characteristic ul{
@@ -145,6 +146,14 @@ display: block;
 }
 #sethoursform{
   position: absolute;
+}
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 @media(max-width:767px){}
 @media(min-width:768px){
