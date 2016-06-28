@@ -12,39 +12,22 @@
   ?>
   <div class="container-fluid">
     <?php include 'app/view/sidebar.php'; ?>
-      <div class="col-md-10">
-        <div class="row">
-          <div class="col-md-9" id="dashboard">Dashboard</div>
-          <div class="col-md-3">
-          </div>
-          <div class="col-md-6 col-sm-4">
-          <div class="col-md-12">
+<div class="col-md-9" id="dashboard">Dashboard</div>
+          <div class="col-xs-12 col-sm-12 col-md-6 monthOverviewSection">
+          <div class="col-xs-12 col-md-12">
             <h3>maandoverzicht</h3>
           </div>
-          <div id="carousel">
-              <span>January</span>
-              <span>February</span>
-              <span>March</span>
-              <span>April</span>
-              <span>May</span>
-              <span>June</span>
-              <span>July</span>
-              <span>August</span>
-              <span>September</span>
-              <span>Oktober</span>
-              <span>November</span>
-              <span>December</span>
-          </div>
-          <div class="col-md-6 monthdata">
-            <h3>Verdient</h3>
-            <div class="earnings"></div>
-          </div>
-          <div class="col-md-6 monthdata">
-            <h3>uren gewerkt</h3>
-            <div class="hours"></div>
-          </div>
+          <div id="carousel"></div>
+            <div class="col-sm-6 col-xs-6">
+              <h3>Verdient</h3>
+              <div class="earnings"></div>
+            </div>
+            <div class="col-sm-6 col-xs-6">
+              <h3>uren gewerkt</h3>
+              <div class="hours"></div>
+            </div>
         </div>
-          <div class="col-md-4">
+          <div class="col-xs-12 col-sm-6 col-md-4 yearOverviewSection">
             <div class="col-md-12">
               <h3>overzicht van dit jaar</h3>
             </div>
@@ -72,10 +55,7 @@
             </ul>
               </div>
             </div>
-          </div>
-        </div>
       </div>
-    </div>
   </div>
   </body>
 </html>
