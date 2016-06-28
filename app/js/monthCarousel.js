@@ -3,39 +3,72 @@ window.onload = function(){
       positionInfo = carousel.getBoundingClientRect(),
       carouselWidth = positionInfo.width,
       center = carousel.clientWidth/2,
-      children = carousel.children,
-      childInfo = children[0].getBoundingClientRect(),
       oldxValue = 0,
       positions = [],
+      children,
+      childInfo,
+      monthNames = ["January", "February", "March","April", "May", "June", "July","August", "September", "October","November", "December"],
       isTouchSupported = 'ontouchstart' in window,
       startEvent = isTouchSupported ? 'touchstart' : 'mousedown',
       moveEvent = isTouchSupported ? 'touchmove' : 'mousemove',
       endEvent = isTouchSupported ? 'touchend' : 'mouseup';
+      var prevEv = false;
 
+  function setMonthNames(){
+    for (var i = 0; i < monthNames.length; i++) {
+        carousel.innerHTML += "<span class='noselect'>"+monthNames[i]+"</span>";
+    }
+    children = carousel.children;
+    childInfo = children[0].getBoundingClientRect();
+  }
+  setMonthNames();
   function setChildWidth(){
     for (var i = 0; i < children.length; i++) {
       children[i].style.width = parseInt(carouselWidth/3) + "px";
     }
   }
   setChildWidth();
-  function scrollHorizontally(e) {
-      touchobj = e.pageX == undefined ? e.changedTouches[0].pageX : e.pageX,
-      positionInfo = carousel.getBoundingClientRect(),
-      mouseX = touchobj - positionInfo.left;
-      if(e.pageX > positionInfo.right || e.pageX < positionInfo.left || e.pageY > positionInfo.bottom || e.pageY < positionInfo.top){
+  function scrollHorizontally(evt) {
+      touchobj = evt.pageX == undefined ? [evt.changedTouches[0].pageX,evt.changedTouches[0].pageY,'mobile']: [evt.pageX,evt.pageY,'pc'];
+      if(touchobj[0] > positionInfo.right || touchobj[0] < positionInfo.left || touchobj[1] < positionInfo.bottom || touchobj[1] > positionInfo.top + children[0].clientHeight){
         setcenter();
       }
-      if(touchobj < oldxValue){
-        carousel.scrollLeft += 3;
-      }else{
-        carousel.scrollLeft -= 3;
+
+    evt.time = Date.now();
+      res = makeVelocityCalculator( touchobj, prevEv);
+      var res = touchobj[2] == 'pc' ? res*2 : res*6;
+      prevEv = evt;
+      if(res != Infinity && res != NaN){
+        if(touchobj[0] < oldxValue)
+          carousel.scrollLeft += res;
+        if(touchobj[0] > oldxValue)
+          carousel.scrollLeft -= res;
       }
-      oldxValue =  touchobj;
-      e.preventDefault();
+      oldxValue =  touchobj[0];
+      evt.preventDefault();
   }
+
+  function makeVelocityCalculator(e_init, e) {
+          var x = e_init[0], new_x,new_y,new_t,
+              x_dist, y_dist, interval,velocity,
+              y = e_init[1],
+              t;
+      if (e === false) {return 0;}
+      t = e.time;
+      new_x = e.pageX == undefined ? e.changedTouches[0].pageX: e.pageX;
+      new_y = e.pageY == undefined ? e.changedTouches[0].pageY: e.pageY;
+      new_t = Date.now();
+      x_dist = new_x - x;
+      y_dist = new_y - y;
+      interval = new_t - t;
+      x = new_x;
+      y = new_y;
+      velocity = Math.sqrt(x_dist*x_dist+y_dist*y_dist)/interval;
+      return velocity;
+}
+
   function setcenter(startDate){
     window.removeEventListener(moveEvent, scrollHorizontally,false);
-    e = window.event || e;
     positions = [];
     for (var i = 0; i < children.length; i++) {
       var month = carousel.children[i].innerHTML;
@@ -55,7 +88,7 @@ window.onload = function(){
   start = typeof startDate === 'number' ? animate(positions,index,startDate) : animate(positions,index,Infinity);
 }
 function animate(object,month,startPosition){
-  var offset = object[month].offset,
+  var offset = parseInt(object[month].offset),
     scrollCount = 0,
     scrollInterval = setInterval(function(){
       if(scrollCount != offset){
@@ -72,12 +105,12 @@ function animate(object,month,startPosition){
           getData(object[startPosition]);
         }
         restore();
-        }
-    });
+      }else{
+      }
+    },1);
   }
   function setStartPosition(){
-    var monthNames = ["January", "February", "March","April", "May", "June", "July","August", "September", "October","November", "December"],
-        currentMonth = new Date().getMonth(),
+    var currentMonth = new Date().getMonth(),
         width = children[0].getBoundingClientRect().width;
         setcenter(currentMonth);
     for (var i = 0; i < positions.length; i++) {
