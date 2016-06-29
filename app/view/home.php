@@ -1,7 +1,6 @@
 <script src="app/js/monthCarousel.js"></script>
 </head>
 <body>
-    <div id="loading"><img src='app/img/progress-bar.gif'/></div>
   <?php
   include 'app/util/operators.php';
   include 'app/view/navigation_bar.php';
