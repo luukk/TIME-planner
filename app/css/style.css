@@ -20,13 +20,6 @@
   font-size: 25px;
   padding-bottom:10px;
 }
-#loading{
-  display: none;
-}
-#loading img{
-margin: 0 auto;
-display: block;
-}
 .show{
   display: block !important;
   position: absolute;
@@ -154,6 +147,12 @@ display: block;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+#loading{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 35%;
 }
 @media(max-width:767px){}
 @media(min-width:768px){
