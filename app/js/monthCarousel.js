@@ -125,7 +125,7 @@ function animate(object,month,startPosition){
     selectedMonth = new Date().toUTCString().split(' ')[2],
     checkMonth = month.month;
     httpRequest = new HttpRequest();
-    httpRequest.load("app/models/carouselOutput.php?date="+checkMonth, function(data) {
+    httpRequest.load("app/models/carouselOutput.php?date="+checkMonth,'.monthOverviewSection', function(data) {
       data = JSON.parse(data);
       document.querySelector('.earnings').innerHTML = "&euro;"+data.earned;
       document.querySelector('.hours').innerHTML = data.hours_worked;
