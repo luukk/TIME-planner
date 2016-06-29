@@ -1,6 +1,7 @@
 <script src="app/js/workedData.js"></script>
 </head>
 <body>
+
   <?php include 'app/view/navigation_bar.php'; ?>
   <div class="container-fluid">
     <?php include 'app/view/sidebar.php'; ?>
@@ -38,7 +39,7 @@
 <script type="text/javascript">
 var httpRequest = new HttpRequest();
 function getCalendar(month){
-  httpRequest.load("app/view/calendar.php?month="+month,function(data){
+  httpRequest.load("app/view/calendar.php?month="+month,'#calander',function(data){
     document.getElementById('calander').innerHTML = data;
   });
 }

@@ -1,11 +1,10 @@
 $(document).ready(function(){
   var form = document.getElementById('sethoursform');
-  console.log(form);
   form.addEventListener('submit',function(e){
     var hours = document.getElementById('sethours').value;
     httpRequest = new HttpRequest();
 
-    httpRequest.load("app/models/setmanagerdata.php?date="+date+"&worked="+hours, function(data) {
+    httpRequest.load("app/models/setmanagerdata.php?date="+date+"&worked="+hours,'#calander', function(data) {
       dom[0].innerHTML = data;
       dom[0].parentNode.className += ' grey';
     });
@@ -16,7 +15,6 @@ $(document).ready(function(){
   var strUser = e.options;
   $(document).on('click','.date_cell', function() {
       $('#sethours').val('')
-      console.log('click');
       date = $(this).attr('date');
       $("#hourVensterDate").html(date);
       dom = $(this).find('.popup_event');

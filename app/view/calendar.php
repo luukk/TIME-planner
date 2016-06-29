@@ -1,5 +1,4 @@
     <div class="row">
-      <div id="loading"><img src='app/img/progress-bar.gif'/></div>
       <div class="col-md-12">
         <?php
         for ($d=0; $d < 7 ; $d++) {
