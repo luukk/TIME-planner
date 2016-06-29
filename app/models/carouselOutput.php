@@ -12,7 +12,7 @@ $query = "SELECT user.userid, events.userid,events.date,events.hours_worked, use
           FROM user
           INNER JOiN events
           ON  user.userid=events.userid
-          WHERE events.userid LIKE '".$userid."' AND MONTH(events.date) = '".$monthInInt."'";
+          WHERE events.userid LIKE '".$userid."' AND MONTH(events.date) = '".$monthInInt."' AND YEAR(events.date) = '".date('Y')."'";
 $result = $mysqli->query($query);
 
 while($a = $result->fetch_assoc()){
